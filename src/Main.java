@@ -1,6 +1,13 @@
 public class Main {
+    static TaskManager taskManager = new TaskManager();
 
     public static void main(String[] args) {
-        System.out.println("Поехали!");
+        taskManager.testingEpic();
+        taskManager.testingTask();
     }
-}
+
+
+
+
+    }
+
