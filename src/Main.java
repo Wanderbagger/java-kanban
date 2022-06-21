@@ -49,18 +49,27 @@ public class Main {
         taskManager.printSubtask(10);
         taskManager.printSubtask(11);
         taskManager.printSubtask(12);
-
+        // проверим историю просмотров
         System.out.println("Все, что ниже - уже история:");
-
         System.out.println(taskManager.getHistory());
+        // проверим пару методов на выбор
         taskManager.printAllSubtasks(6);
         taskManager.deleteAllSubtasks(6);
         System.out.println("Удалили все подзадачи эпика № 6");
         taskManager.printAllSubtasks(6);
-
+        taskManager.printEpic(6);
+        Task task5 = new Task(0, "Обновленная задача", "Поиграть в космических рейнджеров", Status.NEW);
+        taskManager.printTask(3);
+        taskManager.updateTask(3, task5);
+        taskManager.printTask(3);
+        // проверим изменение статуса эпика при обновлении всех его подзадач на готовые
+        Subtask subtask7 = new Subtask(0, "Подзадача № 1", "Дойти до метро", Status.DONE, 5);
+        Subtask subtask8 = new Subtask(0, "Подзадача № 2", "Прокатиться на метро", Status.DONE, 5);
+        Subtask subtask9 = new Subtask(0, "Подзадача № 3", "Дойти до офиса", Status.DONE, 5);
+        taskManager.updateSubtask(7,subtask7);
+        taskManager.updateSubtask(8,subtask8);
+        taskManager.updateSubtask(9,subtask9);
+        taskManager.printEpic(5);
     }
-
-
-
 }
 
