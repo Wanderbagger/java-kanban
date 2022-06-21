@@ -3,13 +3,13 @@ import manager.Status;
 
 public class Task {
 
-    private Integer Id;
+    private int id;
     private String title;
     private String description;
     private Status status;
 
-    public Task(Integer Id, String title, String description, Status status) {
-        this.Id = Id;
+    public Task(int id, String title, String description, Status status) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.status = status;
@@ -18,15 +18,15 @@ public class Task {
     @Override
     public String toString() {
 
-        return "{taskId=" + "'" + getId() + "'" +
+        return "{id=" + "'" + getId() + "'" +
                 ", title='" + getTitle() + '\'' +
                 ", description='" + getDescription() + '\'' +
                 ", status=" + getStatus() +
                 '}';
     }
 
-    public Integer getId() {
-        return Id;
+    public int getId() {
+        return id;
     }
 
     public String getTitle() {
@@ -41,8 +41,8 @@ public class Task {
         return status;
     }
 
-    public void setId(Integer id) {
-        this.Id = id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setTitle(String title) {
