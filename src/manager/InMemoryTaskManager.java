@@ -7,9 +7,9 @@ import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
     private int id = 0;
-    private HashMap<Integer, Task> tasks = new HashMap<Integer, Task>(); // Создали три Хэшмэпа, каждый - для своего типа задачи
-    private HashMap<Integer, Epic> epics = new HashMap<Integer, Epic>();
-    private HashMap<Integer, Subtask> subtasks = new HashMap<Integer, Subtask>();
+    private HashMap<Integer, Task> tasks;  // Создали три Хэшмэпа, каждый - для своего типа задачи
+    private HashMap<Integer, Epic> epics;
+    private HashMap<Integer, Subtask> subtasks;
     private final InMemoryHistoryManager history;
 
     public InMemoryTaskManager() {
@@ -64,16 +64,14 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteAllSubtasks(int epicId) {  // удаление всех подзадач одного эпика
-        ArrayList<Integer> findId = new ArrayList<>(); // я перебрал несколько вариантов и итератор тоже,
-        for (int subtaskId : subtasks.keySet()) { //  так и не понял, как обойти java.util.ConcurrentModificationException
-            Subtask subtask = subtasks.get(subtaskId);
-            if (subtask.getEpicId() == epicId) {
-                findId.add(subtaskId); // добавили в список все Id всех подзадач, которые надо удалить
+        Iterator<Map.Entry<Integer, Subtask>> iterator = subtasks.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Subtask subtask = subtasks.get(iterator.next().getKey()); // теперь работает с итератором, я и раньше его пробовал,
+            if (epicId == subtask.getEpicId()) { // но не понял, что remove надо делать из итератора, удалял из коллекции и происходила ошибка
+                iterator.remove(); // спасибо за подсказку!
             }
         }
-        for (int finder : findId) {
-            deleteSubtask(finder); // удалили
-        }
+        changeEpicStatus(epicId); // проверка статуса эпика с учетом удаленных подзадач
     }
 
     @Override
@@ -136,6 +134,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void printTask(int id) {  // Вывод одной задачи по Id
         history.addRecord(tasks.get(id));
+        System.out.println("Задача:");
         System.out.println(tasks.get(id));
     }
 
@@ -151,6 +150,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void printSubtask(int id) {  // Вывод одной подзадачи по ID
         history.addRecord(subtasks.get(id));
+        System.out.println("Подзадача:");
         System.out.println(subtasks.get(id));
     }
 
@@ -160,6 +160,8 @@ public class InMemoryTaskManager implements TaskManager {
             deleteTask(id);
             task.setId(id);
             tasks.put(task.getId(), task);
+        } else {
+            System.out.println("Такой задачи не существует");
         }
     }
 
@@ -180,7 +182,9 @@ public class InMemoryTaskManager implements TaskManager {
                 }
             }
             deleteEpic(oldEpicId);
-       }
+        } else {
+            System.out.println("Такого эпика не существует");
+        }
     }
 
     @Override

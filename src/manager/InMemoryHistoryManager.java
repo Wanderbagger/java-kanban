@@ -1,17 +1,18 @@
 package manager;
 
 import tasks.Task;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class InMemoryHistoryManager implements HistoryManager{
-    private List<Task> history = new ArrayList<>();
+    LinkedList<Task> history = new LinkedList<>();
 
+    static public final int HISTORY_MAX_LENGTH = 10;
     @Override
     public void addRecord(Task task) { // добавление записи в историю прсмотров
         history.add(task);
-        final int MAXIMUM_LENGTH = 10;
-        if (history.size() > MAXIMUM_LENGTH) {
+
+        if (history.size() > HISTORY_MAX_LENGTH) {
             history.remove(0);
         }
     }
