@@ -69,6 +69,7 @@ public class InMemoryTaskManager implements TaskManager {
             Subtask subtask = subtasks.get(iterator.next().getKey()); // теперь работает с итератором, я и раньше его пробовал,
             if (epicId == subtask.getEpicId()) { // но не понял, что remove надо делать из итератора, удалял из коллекции и происходила ошибка
                 iterator.remove(); // спасибо за подсказку!
+                history.removeRecord(subtask.getId());
             }
         }
         changeEpicStatus(epicId); // проверка статуса эпика с учетом удаленных подзадач
@@ -76,21 +77,42 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteTask(int id) {  // удаление одной задачи
-        tasks.remove(id);
+        Task task = tasks.get(id);
+        if(task != null) {
+            history.removeRecord(task.getId());
+            tasks.remove(id);
+        } else {
+            System.out.println("Такой задачи не существует");
+        }
+
     }
 
     @Override
     public void deleteEpic(int id) {  // удаление одного эпика
-        epics.remove(id);
+        Epic epic = epics.get(id);
+        if (epic != null) {
+            history.removeRecord(epic.getId());
+            epics.remove(id);
+            deleteAllSubtasks(id);
+        } else {
+            System.out.println("Такого эпика не существует");
+        }
     }
 
     @Override
     public void deleteSubtask(int id) {  // удаление одной подзадачи
         Subtask subtask = subtasks.get(id);
-        int epicId = subtask.getEpicId();
-        subtasks.remove(id); // удалили подзадачу
-        Epic epic = epics.get(epicId);
-        changeEpicStatus(epic.getId()); // Проверка на завершенность эпика
+        if (subtask != null) {
+            history.removeRecord(subtask.getId());
+            int epicId = subtask.getEpicId();
+            subtasks.remove(id); // удалили подзадачу
+            Epic epic = epics.get(epicId);
+            if (epic != null) {
+                changeEpicStatus(epic.getId()); // Проверка на завершенность эпика
+            }
+        } else {
+            System.out.println("Такой подзадачи не существует");
+        }
     }
 
     @Override

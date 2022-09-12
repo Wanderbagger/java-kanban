@@ -1,13 +1,21 @@
 package manager;
 
 import tasks.Task;
+
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-public class InMemoryHistoryManager implements HistoryManager{
-    LinkedList<Task> history = new LinkedList<>();
+public class InMemoryHistoryManager<T> implements HistoryManager{
+    public Node<T> head;
+    public Node<T> tail;
 
+    LinkedList<Task> history = new LinkedList<>();
     static public final int HISTORY_MAX_LENGTH = 10;
+
+    HashMap historyTable = new HashMap();
+
+
     @Override
     public void addRecord(Task task) { // добавление записи в историю прсмотров
         history.add(task);
@@ -19,7 +27,7 @@ public class InMemoryHistoryManager implements HistoryManager{
 
     @Override
     public void removeRecord(int id) {
-        history.remove(id);
+        history.remove();
     } // удаление записи из истории прсмотров
 
     @Override
