@@ -18,18 +18,26 @@ public class Main {
         Epic epic1 = new Epic(0, "Большая задача № 1", "Отправиться на работу", Status.NEW);
 
         Subtask subtask1 = new Subtask(0, "Подзадача № 1", "Дойти до метро", Status.NEW, 0);
+        Subtask subtask2 = new Subtask(0, "Подзадача № 2", "Спуститься в метро", Status.NEW, 0);
+        Subtask subtask3 = new Subtask(0, "Подзадача № 3", "Дождаться поезд", Status.NEW, 0);
+
+        Epic epic2 = new Epic(0, "Большая задача № 2", "Пустая задача", Status.NEW);
 
         taskManager.addTask(task1);
-
-        taskManager.addEpic(epic1);
-        taskManager.addSubtask(2, subtask1);
         taskManager.addTask(task2);
+        taskManager.addEpic(epic1);
+        taskManager.addSubtask(3, subtask1);
+        taskManager.addSubtask(3, subtask2);
+        taskManager.addSubtask(3, subtask3);
+        taskManager.addEpic(epic2);
         taskManager.printTask(1);
 
-        taskManager.printEpic(2);
-        taskManager.printSubtask(3);
-        taskManager.printTask(4);
+        System.out.println(taskManager.getHistory());
 
+        taskManager.printEpic(3);
+        taskManager.printSubtask(4);
+        taskManager.printTask(2);
+        taskManager.printEpic(7);
 
         // проверим историю просмотров
         System.out.println("Все, что ниже - уже история:");
@@ -38,13 +46,13 @@ public class Main {
 
 
         taskManager.deleteTask(1);
-        taskManager.deleteEpic(2);
-        taskManager.deleteSubtask(3);
+        taskManager.deleteEpic(3);
+
 
 
         System.out.println("Проверка после удаления:");
         System.out.println(taskManager.getHistory());
-        taskManager.printAllSubtasks(2);
+
 
 
     }
