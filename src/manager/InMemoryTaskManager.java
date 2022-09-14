@@ -7,9 +7,9 @@ import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
     private int id = 0;
-    private HashMap<Integer, Task> tasks;  // Создали три Хэшмэпа, каждый - для своего типа задачи
-    private HashMap<Integer, Epic> epics;
-    private HashMap<Integer, Subtask> subtasks;
+    private Map<Integer, Task> tasks;  // Создали три Хэшмэпа, каждый - для своего типа задачи
+    private Map<Integer, Epic> epics;
+    private Map<Integer, Subtask> subtasks;
     private final InMemoryHistoryManager history;
 
     public InMemoryTaskManager() {

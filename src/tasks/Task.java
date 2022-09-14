@@ -22,7 +22,7 @@ public class Task {
                 ", title='" + getTitle() + '\'' +
                 ", description='" + getDescription() + '\'' +
                 ", status=" + getStatus() +
-                '}';
+                '}' + '\n';
     }
 
     public int getId() {

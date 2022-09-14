@@ -5,15 +5,16 @@ import tasks.Task;
 import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager{
-    final private Map<Integer, Node> nodeMap = new HashMap<>();
+    private final Map<Integer, Node> nodeMap = new HashMap<>();
     private Node last;
     private Node first;
 
     @Override
     public void addRecord(Task task) { // добавление записи в историю прсмотров
+        if (nodeMap.containsKey(task.getId())){
+            removeRecord(task.getId());
+        }
         linkLast(task);
-        nodeMap.put(task.getId(), last);
-
     }
 
     public void linkLast(Task task) { // добавление записи в конец CustomLinkedList
@@ -51,13 +52,11 @@ public class InMemoryHistoryManager implements HistoryManager{
     }
 
     @Override
-    public void removeRecord(int id) {
+    public void removeRecord(int id) { // удаление записи из истории прсмотров
         removeNode(nodeMap.get(id));
-    } // удаление записи из истории прсмотров
+    }
 
-
-    @Override
-    public List<Task> getHistory() {
+    public List<Task> getTasks() {
         List<Task> tasks = new ArrayList<>();
         Node currentNode = first;
         while (currentNode != null) {
@@ -65,6 +64,11 @@ public class InMemoryHistoryManager implements HistoryManager{
             currentNode = currentNode.next;
         }
         return tasks;
+    }
+
+    @Override
+    public List<Task> getHistory() {
+        return getTasks();
     } // возврат истории просмотров
 
     private class Node{

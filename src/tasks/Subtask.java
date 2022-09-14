@@ -23,7 +23,7 @@ public class Subtask extends Task {
                 ", description='" + getDescription() + '\'' +
                 ", status=" + getStatus() +
                 ", epicID=" + epicId +
-                '}';
+                '}' + '\n';
     }
 
     public void setEpicId(int epicId) {

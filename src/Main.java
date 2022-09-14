@@ -1,4 +1,3 @@
-import manager.HistoryManager;
 import manager.InMemoryTaskManager;
 import manager.Status;
 import tasks.Epic;
@@ -30,25 +29,27 @@ public class Main {
         taskManager.addSubtask(3, subtask2);
         taskManager.addSubtask(3, subtask3);
         taskManager.addEpic(epic2);
+
         taskManager.printTask(1);
-
-        System.out.println(taskManager.getHistory());
-
         taskManager.printEpic(3);
         taskManager.printSubtask(4);
         taskManager.printTask(2);
         taskManager.printEpic(7);
 
-        // проверим историю просмотров
         System.out.println("Все, что ниже - уже история:");
         System.out.println(taskManager.getHistory());
-        // проверим пару методов на выбор
 
+        taskManager.printTask(1);
+        taskManager.printEpic(3);
+        taskManager.printSubtask(4);
+        taskManager.printTask(2);
+        taskManager.printEpic(7);
+
+        System.out.println("Проверка на отсутствие повторов:");
+        System.out.println(taskManager.getHistory());
 
         taskManager.deleteTask(1);
         taskManager.deleteEpic(3);
-
-
 
         System.out.println("Проверка после удаления:");
         System.out.println(taskManager.getHistory());

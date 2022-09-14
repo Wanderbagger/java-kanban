@@ -8,44 +8,43 @@ import java.util.List;
 
 public interface TaskManager { // Интерфейс менеджера задач
 
+    void addTask(Task task);   // Добавление новой задачи
 
-    public void addTask(Task task);   // Добавление новой задачи
+    void addEpic(Epic epic);  // Добавление нового эпика
 
-    public void addEpic(Epic epic);  // Добавление нового эпика
+    void addSubtask(Integer epicId, Subtask subtask); // Добавление новой подзадачи
 
-    public void addSubtask(Integer epicId, Subtask subtask); // Добавление новой подзадачи
+   void deleteAllTasks();   // очистка списка задач
 
-    public void deleteAllTasks();   // очистка списка задач
+    void deleteAllEpics();   // очистка списка эпиков
 
-    public void deleteAllEpics();   // очистка списка эпиков
+    void deleteAllSubtasks(int epicId);   // удаление всех подзадач одного эпика
 
-    public void deleteAllSubtasks(int epicId);   // удаление всех подзадач одного эпика
+    void deleteTask(int taskId);
 
-    public void deleteTask(int taskId);
+    void deleteEpic(int taskId);
 
-    public void deleteEpic(int taskId);
+    void deleteSubtask(int subtaskId);
 
-    public void deleteSubtask(int subtaskId);
+    void printTasks();
 
-    public void printTasks();
+    void printEpics();
 
-    public void printEpics();
+    void printAllSubtasks(int epicId);
 
-    public void printAllSubtasks(int epicId);
+    void printTask(int taskId);
 
-    public void printTask(int taskId);
+    void printEpic(int epicId);
 
-    public void printEpic(int epicId);
+    void printSubtask(int taskId);
 
-    public void printSubtask(int taskId);
+    void updateTask(int taskId, Task task);
 
-    public void updateTask(int taskId, Task task);
+    void updateEpic(int taskId, Epic epic);
 
-    public void updateEpic(int taskId, Epic epic);
+    void updateSubtask(int subtaskID, Subtask subtask);
 
-    public void updateSubtask(int subtaskID, Subtask subtask);
-
-    public List<Task> getHistory();
+    List<Task> getHistory();
 }
 
 
