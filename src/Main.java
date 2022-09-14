@@ -53,9 +53,6 @@ public class Main {
 
         System.out.println("Проверка после удаления:");
         System.out.println(taskManager.getHistory());
-
-
-
     }
 }
 

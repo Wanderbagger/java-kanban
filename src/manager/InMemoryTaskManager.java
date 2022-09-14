@@ -7,7 +7,7 @@ import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
     private int id = 0;
-    private Map<Integer, Task> tasks;  // Создали три Хэшмэпа, каждый - для своего типа задачи
+    private Map<Integer, Task> tasks;  // Создали три мэпа, каждый - для своего типа задачи
     private Map<Integer, Epic> epics;
     private Map<Integer, Subtask> subtasks;
     private final InMemoryHistoryManager history;
@@ -66,9 +66,9 @@ public class InMemoryTaskManager implements TaskManager {
     public void deleteAllSubtasks(int epicId) {  // удаление всех подзадач одного эпика
         Iterator<Map.Entry<Integer, Subtask>> iterator = subtasks.entrySet().iterator();
         while (iterator.hasNext()) {
-            Subtask subtask = subtasks.get(iterator.next().getKey()); // теперь работает с итератором, я и раньше его пробовал,
-            if (epicId == subtask.getEpicId()) { // но не понял, что remove надо делать из итератора, удалял из коллекции и происходила ошибка
-                iterator.remove(); // спасибо за подсказку!
+            Subtask subtask = subtasks.get(iterator.next().getKey());
+            if (epicId == subtask.getEpicId()) {
+                iterator.remove();
                 history.removeRecord(subtask.getId());
             }
         }
@@ -79,7 +79,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void deleteTask(int id) {  // удаление одной задачи
         Task task = tasks.get(id);
         if(task != null) {
-            history.removeRecord(task.getId());
+            history.removeRecord(task.getId()); // удаление из истории
             tasks.remove(id);
         } else {
             System.out.println("Такой задачи не существует");
@@ -91,7 +91,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void deleteEpic(int id) {  // удаление одного эпика
         Epic epic = epics.get(id);
         if (epic != null) {
-            history.removeRecord(epic.getId());
+            history.removeRecord(epic.getId()); // удаление из истории
             epics.remove(id);
             deleteAllSubtasks(id);
         } else {
@@ -103,7 +103,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void deleteSubtask(int id) {  // удаление одной подзадачи
         Subtask subtask = subtasks.get(id);
         if (subtask != null) {
-            history.removeRecord(subtask.getId());
+            history.removeRecord(subtask.getId()); // удаление из истории
             int epicId = subtask.getEpicId();
             subtasks.remove(id); // удалили подзадачу
             Epic epic = epics.get(epicId);

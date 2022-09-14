@@ -34,7 +34,6 @@ public class InMemoryHistoryManager implements HistoryManager{
             final Node next = node.next;
             final Node prev = node.prev;
             node.task = null;
-
             if (first == node && last == node) { // если в CustomLinkedList нет других нот, сотрем данные о предыдущей и следующей
                 first = null;
                 last = null;
@@ -67,9 +66,9 @@ public class InMemoryHistoryManager implements HistoryManager{
     }
 
     @Override
-    public List<Task> getHistory() {
+    public List<Task> getHistory() { // возврат истории просмотров
         return getTasks();
-    } // возврат истории просмотров
+    }
 
     private class Node{
         Task task;
