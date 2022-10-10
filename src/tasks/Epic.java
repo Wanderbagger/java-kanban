@@ -1,11 +1,9 @@
 package tasks;
 
-import manager.Status;
-
 public class Epic extends Task {
 
-    public Epic(Integer id, String title, String description, Status status) {
-        super(id, title, description, status);
+    public Epic(TypeTask typeTask, Integer id, String title, String description, Status status) {
+        super(typeTask, id, title, description, status);
     }
 
     @Override

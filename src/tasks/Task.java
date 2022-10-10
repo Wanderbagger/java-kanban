@@ -1,5 +1,4 @@
 package tasks;
-import manager.Status;
 
 public class Task {
 
@@ -7,12 +6,16 @@ public class Task {
     private String title;
     private String description;
     private Status status;
+    protected TypeTask typeTask; // тип задачи
 
-    public Task(int id, String title, String description, Status status) {
+    public Task(TypeTask typeTask, int id, String title, String description, Status status) {
+        this.typeTask = typeTask;
         this.id = id;
         this.title = title;
         this.description = description;
         this.status = status;
+
+
     }
 
     @Override
@@ -23,6 +26,10 @@ public class Task {
                 ", description='" + getDescription() + '\'' +
                 ", status=" + getStatus() +
                 '}' + '\n';
+    }
+
+    public TypeTask getTypeTask() {
+        return typeTask;
     }
 
     public int getId() {

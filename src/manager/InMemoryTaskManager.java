@@ -1,15 +1,16 @@
 package manager;
 
 import tasks.Epic;
+import tasks.Status;
 import tasks.Subtask;
 import tasks.Task;
 import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
     private int id = 0;
-    private Map<Integer, Task> tasks;  // Создали три мэпа, каждый - для своего типа задачи
-    private Map<Integer, Epic> epics;
-    private Map<Integer, Subtask> subtasks;
+    public Map<Integer, Task> tasks;  // Создали три мэпа, каждый - для своего типа задачи
+    public Map<Integer, Epic> epics;
+    public Map<Integer, Subtask> subtasks;
     private final InMemoryHistoryManager history;
 
     public InMemoryTaskManager() {
