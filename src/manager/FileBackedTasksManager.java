@@ -27,8 +27,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
                 }
                 Task task = CSVFormatter.fromString(line);
                 if (task != null) {
-                    int id = task.getId();
-
                     switch (task.getTypeTask()) {
                         case TASK:
                             tasksManager.tasks.put(task.getId(), task);
@@ -43,14 +41,11 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
                 }
             }
 
-
             // восстановление истории
             InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
             for (Integer taskId : history) {
-
                 historyManager.addRecord(tasksManager.tasks.get(taskId));
             }
-
         } catch (IOException e) {
             throw new ManagerSaveException("Ошибка чтения файла");
         }

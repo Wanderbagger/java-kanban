@@ -1,43 +1,44 @@
-import manager.InMemoryTaskManager;
-import tasks.Status;
-import tasks.Epic;
-import tasks.Subtask;
-import tasks.Task;
+import manager.FileBackedTasksManager;
+import tasks.*;
+
+import java.io.File;
+
+import static tasks.TypeTask.*;
 
 public class Main {
-    static InMemoryTaskManager taskManager = new InMemoryTaskManager();
-    public static void main(String[] args) {
-        testingTask();
-    }
+     public static void main(String[] args) {
+        System.out.println("Начало проверки");
 
-    public static void testingTask() { // тестируем методы обработки задач
+        File file = new File("data.csv");
+        FileBackedTasksManager fileBackedTasksManager = FileBackedTasksManager.loadFromFile(file);
 
+        Task task2 = new Task(TASK, 0, "Задача 1", "Проснуться", Status.NEW);
+        fileBackedTasksManager.addTask(task2);
 
+        Task task3 = new Task(TASK, 0, "Задача 2", "Умыться", Status.NEW);
+        fileBackedTasksManager.addTask(task3);
 
+        Epic epic3 = new Epic(EPIC, 0, "Эпик 1", "Побриться", Status.NEW);
+        fileBackedTasksManager.addEpic(epic3);
 
-        taskManager.printTask(1);
-        taskManager.printEpic(3);
-        taskManager.printSubtask(4);
-        taskManager.printTask(2);
-        taskManager.printEpic(7);
+        Subtask subtask3 = new Subtask(SUBTASK, 0, "Подзадача 1", "вдруг обнаружить, что тебе это снится",
+                Status.NEW, epic3.getId());
+        fileBackedTasksManager.addSubtask(epic3.getId(), subtask3);
 
-        System.out.println("Все, что ниже - уже история:");
-        System.out.println(taskManager.getHistory());
+        fileBackedTasksManager.printTask(task3.getId());
+        fileBackedTasksManager.printTask(task2.getId());
+        fileBackedTasksManager.printEpic(epic3.getId());
+        fileBackedTasksManager.printSubtask(subtask3.getId());
 
-        taskManager.printTask(1);
-        taskManager.printEpic(3);
-        taskManager.printSubtask(4);
-        taskManager.printTask(2);
-        taskManager.printEpic(7);
+        fileBackedTasksManager.save();
 
-        System.out.println("Проверка на отсутствие повторов:");
-        System.out.println(taskManager.getHistory());
+         file = new File("save.csv");
 
-        taskManager.deleteTask(1);
-        taskManager.deleteEpic(3);
+         FileBackedTasksManager fileBackedTasksManager2 = FileBackedTasksManager.loadFromFile(file);
 
-        System.out.println("Проверка после удаления:");
-        System.out.println(taskManager.getHistory());
+         fileBackedTasksManager2.save();
+
+        System.out.println("Конец проверки!");
+
     }
 }
-

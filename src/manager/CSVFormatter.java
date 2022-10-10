@@ -41,12 +41,12 @@ public class CSVFormatter {
 
     // запись заголовка в строку
     public static String getHeader() {
-        return "id,type,name,status,description,epic";
+        return "type,id,name,status,description,epic";
     }
 
     // запись задачи типа Task в строку
     public static String toString(Task task) {
-        return task.getId() + SEPARATOR + task.getTypeTask() + SEPARATOR
+        return  task.getTypeTask() + SEPARATOR + task.getId() + SEPARATOR
                 + task.getTitle() + SEPARATOR + task.getStatus() + SEPARATOR
                 + task.getDescription() + SEPARATOR;
     }
