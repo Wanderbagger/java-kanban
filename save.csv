@@ -1,0 +1,6 @@
+type,id,name,status,description,epic
+TASK,1,Задача 1,NEW,Проснуться,
+TASK,2,Задача 2,NEW,Умыться,
+EPIC,3,Эпик 1,NEW,Побриться,
+SUBTASK,4,Подзадача 1,NEW,вдруг обнаружить что тебе это снится,3
+
