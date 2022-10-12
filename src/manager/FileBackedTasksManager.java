@@ -9,9 +9,8 @@ import java.nio.file.Files;
 import java.util.Collections;
 import java.util.List;
 
-import static tasks.TypeTask.*;
-
 public class FileBackedTasksManager extends InMemoryTaskManager implements TaskManager {
+    public static final String HEADER = "type,id,name,status,description,epic";
   // загрузка TasksManager'а из файла после запуска программы
     public static FileBackedTasksManager loadFromFile(File file) {
         FileBackedTasksManager tasksManager = new FileBackedTasksManager(file);
@@ -52,11 +51,11 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
         return tasksManager;
     }
 
-    public void save() {
+    public void save(String fileName) {
         InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
-        try (Writer fileWriter = new FileWriter("save.csv");
+        try (Writer fileWriter = new FileWriter(fileName);
              BufferedWriter br = new BufferedWriter(fileWriter)) {
-            br.write(CSVFormatter.getHeader() + System.lineSeparator());
+            br.write(HEADER + System.lineSeparator());
             for (Task task : tasks.values()) {
                 br.write(CSVFormatter.toString(task) + System.lineSeparator());
             }
@@ -80,114 +79,114 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
     @Override
     public void addTask(Task task) {
         super.addTask(task);
-        save();
+        save("save.csv");
     }
 
     @Override
     public void addEpic(Epic epic) {
         super.addEpic(epic);
-        save();
+        save("save.csv");
     }
 
     @Override
     public void addSubtask(Integer epicId, Subtask subtask) {
         super.addSubtask(epicId, subtask);
-        save();
+        save("save.csv");
     }
 
     @Override
     public void deleteAllTasks() {
         super.deleteAllTasks();
-        save();
+        save("save.csv");
     }
 
     @Override
     public void deleteAllEpics() {
         super.deleteAllEpics();
-        save();
+        save("save.csv");
     }
 
     @Override
     public void deleteAllSubtasks(int epicId) {
         super.deleteAllSubtasks(epicId);
-        save();
+        save("save.csv");
     }
 
     @Override
     public void deleteTask(int id) {
         super.deleteTask(id);
-        save();
+        save("save.csv");
     }
 
     @Override
     public void deleteEpic(int id) {
         super.deleteEpic(id);
-        save();
+        save("save.csv");
     }
 
     @Override
     public void deleteSubtask(int id) {
         super.deleteSubtask(id);
-        save();
+        save("save.csv");
     }
 
     @Override
     public void printTasks() {
         super.printTasks();
-        save();
+        save("save.csv");
     }
 
     @Override
     public void printEpics() {
         super.printEpics();
-        save();
+        save("save.csv");
     }
 
     @Override
     public void printAllSubtasks(int id) {
         super.printAllSubtasks(id);
-        save();
+        save("save.csv");
     }
 
     @Override
     public void printTask(int id) {
         super.printTask(id);
-        save();
+        save("save.csv");
     }
 
     @Override
     public void printEpic(int id) {
         super.printEpic(id);
-        save();
+        save("save.csv");
     }
 
     @Override
     public void printSubtask(int id) {
         super.printSubtask(id);
-        save();
+        save("save.csv");
     }
 
     @Override
     public void updateTask(int id, Task task) {
         super.updateTask(id, task);
-        save();
+        save("save.csv");
     }
 
     @Override
     public void updateEpic(int id, Epic epic) {
         super.updateEpic(id, epic);
-        save();
+        save("save.csv");
     }
 
     @Override
     public void updateSubtask(int id, Subtask subtask) {
         super.updateSubtask(id, subtask);
-        save();
+        save("save.csv");
     }
 
     @Override
     public void changeEpicStatus(int id) {
         super.changeEpicStatus(id);
-        save();
+        save("save.csv");
     }
 }

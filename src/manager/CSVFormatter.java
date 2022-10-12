@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CSVFormatter {
-    final static String SEPARATOR = ",";
+    public static final  String SEPARATOR = ",";
 
     public CSVFormatter() {
     }
@@ -39,10 +39,6 @@ public class CSVFormatter {
         return history;
     }
 
-    // запись заголовка в строку
-    public static String getHeader() {
-        return "type,id,name,status,description,epic";
-    }
 
     // запись задачи типа Task в строку
     public static String toString(Task task) {
