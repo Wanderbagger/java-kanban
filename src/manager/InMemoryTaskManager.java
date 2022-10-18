@@ -248,6 +248,51 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
+    public Task getTask(int id) {
+        Task task = tasks.get(id);
+        return task;
+    }
+
+    @Override
+    public Epic getEpic(int id) {
+        Epic epic = epics.get(id);
+        return epic;
+    }
+
+    @Override
+    public Subtask getSubtask(int id) {
+        Subtask subtask = subtasks.get(id);
+        return subtask;
+    }
+
+    @Override
+    public List<Task> getAllTasks() {
+        if (tasks.size() == 0) {
+            System.out.println("Task list is empty");
+            return Collections.emptyList();
+        }
+        return new ArrayList<>(tasks.values());
+    }
+
+    @Override
+    public List<Epic> getAllEpics() {
+        if (epics.size() == 0) {
+            System.out.println("Epic list is empty");
+            return Collections.emptyList();
+        }
+        return new ArrayList<>(epics.values());
+    }
+
+    @Override
+    public List<Subtask> getAllSubtasks() {
+        if (subtasks.size() == 0) {
+            System.out.println("Subtasks list is empty");
+            return Collections.emptyList();
+        }
+        return new ArrayList<>(subtasks.values());
+    }
+
+    @Override
     public List<Task> getHistory() { // Получить историю просмотра
         return history.getHistory();
     }
