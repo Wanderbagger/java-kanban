@@ -2,6 +2,7 @@ package manager;
 
 import tasks.*;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,16 +15,22 @@ public class CSVFormatter {
     // чтение задачи из строки
     public static Task fromString(String value) {
         String[] data = value.split(SEPARATOR);
+        int id = Integer.parseInt(data[1]);
+        String description = data[2];
+        String name = data[3];
+        Status status = Status.valueOf(data[4].toUpperCase());
+        Instant startTime = Instant.parse(data[5]);
+        long duration = Long.parseLong(data[6]);
+
         switch (data[1]) {
             case "TASK":
-                return new Task(TypeTask.getType(data[1]), Integer.parseInt(data[1]), data[2], data[3],
-                        Status.getStatus(data[1]));
+                Task task = new Task(TypeTask.getType(data[1]), id, description, name, status, startTime, duration);
+                task.setId(id);
+                return task;
             case "EPIC":
-                return new Epic(TypeTask.getType(data[1]), Integer.parseInt(data[1]), data[2], data[3],
-                        Status.getStatus(data[1]));
+                return new Epic(TypeTask.getType(data[1]), id, description, name, status, startTime, duration);
             case "SUBTASK":
-                return new Subtask(TypeTask.getType(data[1]), Integer.parseInt(data[1]), data[2], data[3],
-                        Status.getStatus(data[1]), Integer.parseInt(data[5]));
+                return new Subtask(TypeTask.getType(data[1]), id, description, name, status, startTime, duration);
             default:
                 return null;
         }
@@ -43,7 +50,7 @@ public class CSVFormatter {
     // запись задачи типа Task в строку
     public static String toString(Task task) {
         return  task.getTypeTask() + SEPARATOR + task.getId() + SEPARATOR
-                + task.getTitle() + SEPARATOR + task.getStatus() + SEPARATOR
+                + task.getName() + SEPARATOR + task.getStatus() + SEPARATOR
                 + task.getDescription() + SEPARATOR;
     }
 

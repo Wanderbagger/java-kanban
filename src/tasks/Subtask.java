@@ -1,11 +1,18 @@
 package tasks;
 
-public class Subtask extends Task {
+import tasks.Status;
 
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.Objects;
+
+public class Subtask extends Task {
     private int epicId;
 
-    public Subtask(TypeTask typeTask, Integer id, String title, String description, Status status, int epicId) {
-        super(typeTask, id, title, description, status);
+    public Subtask(
+            TypeTask typeTask, int id, String description, String name, Status status, Instant startTime, long duration) {
+        super(typeTask, id, description, name, status, startTime, duration);
         this.epicId = epicId;
     }
 
@@ -14,14 +21,31 @@ public class Subtask extends Task {
     }
 
     @Override
-    public String toString() {
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Subtask subtask = (Subtask) o;
+        return epicId == subtask.epicId;
+    }
 
-        return "{id=" + "'" + getId() + "'" +
-                ", title='" + getTitle() + '\'' +
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), epicId);
+    }
+
+    @Override
+    public String toString() {
+        return "Subtask{" +
+                "epicId=" + getEpicId() +
                 ", description='" + getDescription() + '\'' +
-                ", status=" + getStatus() +
-                ", epicID=" + epicId +
-                '}' + '\n';
+                ", id=" + getId() +
+                ", name='" + getName() + '\'' +
+                ", status=" + getStatus() + '\'' +
+                ", startTime='" + getStartTime().toEpochMilli() + '\'' +
+                ", endTime='" + getEndTime().toEpochMilli() + '\'' +
+                ", duration='" + getDuration() +
+                '}';
     }
 
     public void setEpicId(int epicId) {

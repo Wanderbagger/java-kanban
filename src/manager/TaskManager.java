@@ -44,19 +44,19 @@ public interface TaskManager { // Интерфейс менеджера зада
 
     void updateSubtask(int subtaskID, Subtask subtask);
 
-    Task getTask(int id);
+    List<Task> getHistory();
 
-    Epic getEpic(int id);
+    Task getTaskById(int id);
 
-    Subtask getSubtask(int id);
+    Epic getEpicById(int id);
+
+    Subtask getSubtaskById(int id);
 
     List<Task> getAllTasks();
 
     List<Epic> getAllEpics();
 
     List<Subtask> getAllSubtasks();
-
-    List<Task> getHistory();
 }
 
 

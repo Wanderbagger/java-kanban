@@ -5,6 +5,7 @@ import tasks.Status;
 import tasks.Subtask;
 import tasks.Task;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class InMemoryTaskManager implements TaskManager {
     private int id = 0;
@@ -12,6 +13,8 @@ public class InMemoryTaskManager implements TaskManager {
     public Map<Integer, Epic> epics;
     public Map<Integer, Subtask> subtasks;
     private final InMemoryHistoryManager history;
+    private final Comparator<Task> taskComparator = Comparator.comparing(Task::getStartTime);
+    protected Set<Task> prioritizedTasks = new TreeSet<>(taskComparator);
 
     public InMemoryTaskManager() {
         this.tasks = new HashMap<>();
@@ -158,13 +161,13 @@ public class InMemoryTaskManager implements TaskManager {
     public void printTask(int id) {  // Вывод одной задачи по Id
         history.addRecord(tasks.get(id));
         System.out.println("Задача:");
-        System.out.println(tasks.get(id));
+        System.out.println(getTaskById(id));
     }
 
     @Override
     public void printEpic(int id) {  // Вывод одного эпика по Id
         System.out.println("Эпик:");
-        System.out.println(epics.get(id));
+        System.out.println(getEpicById(id));
         history.addRecord(epics.get(id));
         System.out.println("Подзадачи:"); // Вывод его подзадач
         printAllSubtasks(id);
@@ -174,7 +177,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void printSubtask(int id) {  // Вывод одной подзадачи по ID
         history.addRecord(subtasks.get(id));
         System.out.println("Подзадача:");
-        System.out.println(subtasks.get(id));
+        System.out.println(getSubtaskById(id));
     }
 
     @Override
@@ -248,19 +251,24 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Task getTask(int id) {
+    public List<Task> getHistory() { // Получить историю просмотра
+        return history.getHistory();
+    }
+
+    @Override
+    public Task getTaskById(int id) {
         Task task = tasks.get(id);
         return task;
     }
 
     @Override
-    public Epic getEpic(int id) {
+    public Epic getEpicById(int id) {
         Epic epic = epics.get(id);
         return epic;
     }
 
     @Override
-    public Subtask getSubtask(int id) {
+    public Subtask getSubtaskById(int id) {
         Subtask subtask = subtasks.get(id);
         return subtask;
     }
@@ -292,9 +300,52 @@ public class InMemoryTaskManager implements TaskManager {
         return new ArrayList<>(subtasks.values());
     }
 
-    @Override
-    public List<Task> getHistory() { // Получить историю просмотра
-        return history.getHistory();
+    private void addNewPrioritizedTask(Task task) {
+        prioritizedTasks.add(task);
+        validateTaskPriority();
+    }
+
+    public boolean checkTime(Task task) {
+        List<Task> tasks = List.copyOf(prioritizedTasks);
+        int sizeTimeNull = 0;
+        if (tasks.size() > 0) {
+            for (Task taskSave : tasks) {
+                if (taskSave.getStartTime() != null && taskSave.getEndTime() != null) {
+                    if (task.getStartTime().isBefore(taskSave.getStartTime())
+                            && task.getEndTime().isBefore(taskSave.getStartTime())) {
+                        return true;
+                    } else if (task.getStartTime().isAfter(taskSave.getEndTime())
+                            && task.getEndTime().isAfter(taskSave.getEndTime())) {
+                        return true;
+                    }
+                } else {
+                    sizeTimeNull++;
+                }
+
+            }
+            return sizeTimeNull == tasks.size();
+        } else {
+            return true;
+        }
+    }
+
+    private void validateTaskPriority() {
+        List<Task> tasks = getPrioritizedTasks();
+
+        for (int i = 1; i < tasks.size(); i++) {
+            Task task = tasks.get(i);
+
+            boolean taskHasIntersections = checkTime(task);
+
+            if (taskHasIntersections) {
+                throw new ManagerValidateException(
+                        "Задачи #" + task.getId() + " и #" + tasks.get(i - 1) + "пересекаются");
+            }
+        }
+    }
+
+    private List<Task> getPrioritizedTasks() {
+        return prioritizedTasks.stream().collect(Collectors.toList());
     }
 }
 
