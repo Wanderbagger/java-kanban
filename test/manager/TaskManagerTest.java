@@ -43,7 +43,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
         assertEquals(List.of(epic), epics);
     }
 
-       @Test
+    @Test
     public void shouldUpdateTaskStatusToInProgress() {
         Task task = createTask();
         manager.addTask(task);
@@ -218,7 +218,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
         assertEquals(0, manager.getAllSubtasks().size());
     }
 
-        @Test
+    @Test
     public void shouldReturnEmptyListTasksIfNoTasks() {
         assertTrue(manager.getAllTasks().isEmpty());
     }
