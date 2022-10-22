@@ -36,6 +36,8 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
                         case SUBTASK:
                             tasksManager.subtasks.put(task.getId(), (Subtask) task);
                             break;
+                        default:
+                            throw new IllegalStateException("Unexpected value: " + task.getTypeTask());
                     }
                 }
             }

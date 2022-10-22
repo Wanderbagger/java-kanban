@@ -8,10 +8,6 @@ import java.util.List;
 
 public class CSVFormatter {
     public static final  String SEPARATOR = ",";
-
-    public CSVFormatter() {
-    }
-
     // чтение задачи из строки
     public static Task fromString(String value) {
         String[] data = value.split(SEPARATOR);
@@ -55,7 +51,7 @@ public class CSVFormatter {
     }
 
     // запись истории просмотров в строку
-    static String historyToString(HistoryManager manager) {
+    public static String historyToString(HistoryManager manager) {
         StringBuilder sb = new StringBuilder();
         for (Task task : manager.getHistory()) {
             sb.append(task.getId()).append(SEPARATOR);

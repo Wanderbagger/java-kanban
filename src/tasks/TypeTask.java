@@ -6,15 +6,13 @@ public enum TypeTask {
     SUBTASK;
 
     public static TypeTask getType(String type) {
-        switch (type) {
-            case "TASK":
-                return TypeTask.TASK;
-            case "EPIC":
-                return TypeTask.EPIC;
-            case "SUBTASK":
-                return TypeTask.SUBTASK;
-            default:
-                return null;
+        if ("TASK".equals(type)) {
+            return TypeTask.TASK;
+        } else if ("EPIC".equals(type)) {
+            return TypeTask.EPIC;
+        } else if ("SUBTASK".equals(type)) {
+            return TypeTask.SUBTASK;
         }
+        return null;
     }
 }
