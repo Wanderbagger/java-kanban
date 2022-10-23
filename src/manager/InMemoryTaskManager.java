@@ -318,7 +318,7 @@ public class InMemoryTaskManager implements TaskManager {
                     ||
                     (task.getStartTime().isBefore(validatingTask.getEndTime())
                     && task.getEndTime().isAfter(validatingTask.getStartTime()))) {
-                throw new ManagerValidateException("Задачи #" + task.getId() + " и #" + validatingTask + "пересекаются");
+                throw new ManagerValidateException("Задачи #" + task.getId() + " и #" + validatingTask.getId() + "пересекаются");
             }
         }
     }
