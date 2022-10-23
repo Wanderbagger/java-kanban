@@ -306,17 +306,19 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     private void addNewPrioritizedTask(Task task) {
-        validateTaskPriority();
+        validateTaskPriority(task);
         prioritizedTasks.add(task);
     }
 
-    private void validateTaskPriority() {
-        List<Task> validatingTasks = getPrioritizedTasks();
-        for (int i = 1; i < validatingTasks.size(); i++) {
-            Task task = validatingTasks.get(i);
-            boolean taskHasIntersections = task.getStartTime().isBefore(validatingTasks.get(i - 1).getEndTime());
-            if (taskHasIntersections) {
-                throw new ManagerValidateException("Задачи #" + task.getId() + " и #" + validatingTasks.get(i - 1) + "пересекаются");
+    private void validateTaskPriority(Task task) {
+        List<Task> validatingTasks = getPrioritizedTasks(); // Извиняюсь за качество, в спешке наверстываю пропущенное
+        for (Task validatingTask : validatingTasks) {
+            if ((task.getStartTime().isBefore(validatingTask.getStartTime())
+                    && task.getEndTime().isAfter(validatingTask.getStartTime()))
+                    ||
+                    (task.getStartTime().isBefore(validatingTask.getEndTime())
+                    && task.getEndTime().isAfter(validatingTask.getStartTime()))) {
+                throw new ManagerValidateException("Задачи #" + task.getId() + " и #" + validatingTask + "пересекаются");
             }
         }
     }
