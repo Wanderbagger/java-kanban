@@ -69,7 +69,13 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void deleteAllSubtasks(int epicId) {  // удаление всех подзадач одного эпика
+    public void deleteAllSubtasks() {  // очистка списка подзадач
+        subtasks.clear();
+        System.out.println("Все подзадачи удалены");
+    }
+
+    @Override
+    public void deleteAllSubtasksByEpicId(int epicId) {  // удаление всех подзадач одного эпика
         Iterator<Map.Entry<Integer, Subtask>> iterator = subtasks.entrySet().iterator();
         while (iterator.hasNext()) {
             Subtask subtask = subtasks.get(iterator.next().getKey());
@@ -99,7 +105,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (epic != null) {
             history.removeRecord(epic.getId()); // удаление из истории
             epics.remove(id);
-            deleteAllSubtasks(id);
+            deleteAllSubtasksByEpicId(id);
         } else {
             System.out.println("Такого эпика не существует");
         }
@@ -198,7 +204,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void updateEpic(int id, Epic epic) { // обновление эпика
         if (epic != null) {
             int oldEpicId = epic.getId();
-            deleteAllSubtasks(id);
+            deleteAllSubtasksByEpicId(id);
             deleteEpic(id);
             epic.setId(id);
             addNewPrioritizedTask(epic);
@@ -305,13 +311,15 @@ public class InMemoryTaskManager implements TaskManager {
         return new ArrayList<>(subtasks.values());
     }
 
-    private void addNewPrioritizedTask(Task task) {
+    @Override
+    public void addNewPrioritizedTask(Task task) {
         validateTaskPriority(task);
         prioritizedTasks.add(task);
     }
 
-    private void validateTaskPriority(Task task) {
-        List<Task> validatingTasks = getPrioritizedTasks(); // Извиняюсь за качество, в спешке наверстываю пропущенное
+    @Override
+    public void validateTaskPriority(Task task) { // Проверка на валидацию
+        List<Task> validatingTasks = getPrioritizedTasks();
         for (Task validatingTask : validatingTasks) {
             if ((task.getStartTime().isBefore(validatingTask.getStartTime())
                     && task.getEndTime().isAfter(validatingTask.getStartTime()))
@@ -323,8 +331,23 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
-    private List<Task> getPrioritizedTasks() {
-        return prioritizedTasks.stream().toList();
+    @Override
+    public ArrayList<Task> getPrioritizedTasks() {  // Сортировка по приоритету
+        ArrayList<Task> priority = new ArrayList<>();
+        for(Task task : prioritizedTasks) {
+            priority.add(task);
+        }
+        return priority;
+    }
+
+    @Override
+    public void save() {
+
+    }
+
+    @Override
+    public boolean load() {
+        return false;
     }
 }
 

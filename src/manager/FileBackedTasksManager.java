@@ -12,6 +12,8 @@ import java.util.List;
 public class FileBackedTasksManager extends InMemoryTaskManager implements TaskManager {
     public static final String HEADER = "type,id,name,status,description,epic";
   // загрузка TasksManager'а из файла после запуска программы
+
+
     public static FileBackedTasksManager loadFromFile(File file) {
         FileBackedTasksManager tasksManager = new FileBackedTasksManager(file);
         try {
@@ -53,7 +55,8 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
         return tasksManager;
     }
 
-    public void save(String fileName) {
+    public void save() {
+        String fileName = "data.csv";
         InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
         try (Writer fileWriter = new FileWriter(fileName);
              BufferedWriter br = new BufferedWriter(fileWriter)) {
@@ -75,120 +78,125 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
         }
     }
 
+    @Override
+    public boolean load() {
+        return false;
+    }
+
     public FileBackedTasksManager(File file) {
     }
 
     @Override
     public void addTask(Task task) {
         super.addTask(task);
-        save("save.csv");
+        save();
     }
 
     @Override
     public void addEpic(Epic epic) {
         super.addEpic(epic);
-        save("save.csv");
+        save();
     }
 
     @Override
     public void addSubtask(Integer epicId, Subtask subtask) {
         super.addSubtask(epicId, subtask);
-        save("save.csv");
+        save();
     }
 
     @Override
     public void deleteAllTasks() {
         super.deleteAllTasks();
-        save("save.csv");
+        save();
     }
 
     @Override
     public void deleteAllEpics() {
         super.deleteAllEpics();
-        save("save.csv");
+        save();
     }
 
     @Override
-    public void deleteAllSubtasks(int epicId) {
-        super.deleteAllSubtasks(epicId);
-        save("save.csv");
+    public void deleteAllSubtasksByEpicId(int epicId) {
+        super.deleteAllSubtasksByEpicId(epicId);
+        save();
     }
 
     @Override
     public void deleteTask(int id) {
         super.deleteTask(id);
-        save("save.csv");
+        save();
     }
 
     @Override
     public void deleteEpic(int id) {
         super.deleteEpic(id);
-        save("save.csv");
+        save();
     }
 
     @Override
     public void deleteSubtask(int id) {
         super.deleteSubtask(id);
-        save("save.csv");
+        save();
     }
 
     @Override
     public void printTasks() {
         super.printTasks();
-        save("save.csv");
+        save();
     }
 
     @Override
     public void printEpics() {
         super.printEpics();
-        save("save.csv");
+        save();
     }
 
     @Override
     public void printAllSubtasks(int id) {
         super.printAllSubtasks(id);
-        save("save.csv");
+        save();
     }
 
     @Override
     public void printTask(int id) {
         super.printTask(id);
-        save("save.csv");
+        save();
     }
 
     @Override
     public void printEpic(int id) {
         super.printEpic(id);
-        save("save.csv");
+        save();
     }
 
     @Override
     public void printSubtask(int id) {
         super.printSubtask(id);
-        save("save.csv");
+        save();
     }
 
     @Override
     public void updateTask(int id, Task task) {
         super.updateTask(id, task);
-        save("save.csv");
+        save();
     }
 
     @Override
     public void updateEpic(int id, Epic epic) {
         super.updateEpic(id, epic);
-        save("save.csv");
+        save();
     }
 
     @Override
     public void updateSubtask(int id, Subtask subtask) {
         super.updateSubtask(id, subtask);
-        save("save.csv");
+        save();
     }
 
     @Override
     public void changeEpicStatus(int id) {
         super.changeEpicStatus(id);
-        save("save.csv");
+        save();
     }
 }

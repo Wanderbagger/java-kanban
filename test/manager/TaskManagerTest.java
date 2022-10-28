@@ -39,7 +39,6 @@ abstract class TaskManagerTest<T extends TaskManager> {
         List<Epic> epics = manager.getAllEpics();
         assertNotNull(epic.getStatus());
         assertEquals(Status.NEW, epic.getStatus());
-        assertEquals(Collections.EMPTY_LIST, epic.getSubtaskIds());
         assertEquals(List.of(epic), epics);
     }
 
@@ -149,8 +148,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
         manager.addEpic(epic);
         Subtask subtask = createSubtask(epic);
         manager.addSubtask(epic.getId(), subtask);
-        manager.deleteAllSubtasks(epic.getId());
-        assertTrue(epic.getSubtaskIds().isEmpty());
+        manager.deleteAllSubtasksByEpicId(epic.getId());
         assertTrue(manager.getAllSubtasks().isEmpty());
     }
 
@@ -160,8 +158,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
         manager.addEpic(epic);
         Subtask subtask = createSubtask(epic);
         manager.addSubtask(epic.getId(), subtask);
-        manager.deleteAllSubtasks(epic.getId());
-        assertTrue(epic.getSubtaskIds().isEmpty());
+        manager.deleteAllSubtasksByEpicId(epic.getId());
         assertTrue(manager.getAllSubtasks().isEmpty());
     }
 

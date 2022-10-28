@@ -4,6 +4,8 @@ import tasks.Epic;
 import tasks.Subtask;
 import tasks.Task;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public interface TaskManager { // Интерфейс менеджера задач
@@ -18,7 +20,9 @@ public interface TaskManager { // Интерфейс менеджера зада
 
     void deleteAllEpics();   // очистка списка эпиков
 
-    void deleteAllSubtasks(int epicId);   // удаление всех подзадач одного эпика
+ void deleteAllSubtasks();
+
+ void deleteAllSubtasksByEpicId(int epicId);   // удаление всех подзадач одного эпика
 
     void deleteTask(int taskId);
 
@@ -57,6 +61,16 @@ public interface TaskManager { // Интерфейс менеджера зада
     List<Epic> getAllEpics();
 
     List<Subtask> getAllSubtasks();
+
+ void addNewPrioritizedTask(Task task);
+
+ void validateTaskPriority(Task task);
+
+ List<Task> getPrioritizedTasks();
+
+    void save();
+
+    boolean load();
 }
 
 

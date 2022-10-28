@@ -33,7 +33,7 @@ class FileBackedTasksManagerTest extends TaskManagerTest<InMemoryTaskManager> {
     @Test
     public void shouldSaveAndLoadEmptyTasksEpicsSubtasks() {
         FileBackedTasksManager fileManager = new FileBackedTasksManager(file);
-        fileManager.save("data.csv");
+        fileManager.save();
         fileManager.loadFromFile(file);
         assertEquals(Collections.EMPTY_LIST, manager.getAllTasks());
         assertEquals(Collections.EMPTY_LIST, manager.getAllEpics());
@@ -43,7 +43,7 @@ class FileBackedTasksManagerTest extends TaskManagerTest<InMemoryTaskManager> {
     @Test
     public void shouldSaveAndLoadEmptyHistory() {
         FileBackedTasksManager fileManager = new FileBackedTasksManager(file);
-        fileManager.save("data.csv");
+        fileManager.save();
         fileManager.loadFromFile(file);
         assertEquals(Collections.EMPTY_LIST, manager.getHistory());
     }
