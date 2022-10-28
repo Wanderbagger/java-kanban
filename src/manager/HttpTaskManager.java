@@ -57,7 +57,7 @@ public class HttpTaskManager extends FileBackedTasksManager{
         subtasks = gson.fromJson(subtasksJson, new TypeToken<HashMap<Integer, Subtask>>(){}.getType());
         ArrayList<Task> tasksHistoryJson = gson.fromJson(historyJson, new TypeToken<ArrayList<Task>>(){}.getType());
 
-        for (Task taskhistory : tasksHistoryJson){ // Присваивание значения TASK, EPIC, SUBTASK
+        for (Task taskhistory : tasksHistoryJson){ //
          Task task = tasks.get(taskhistory.getId());
          Epic epic = epics.get(taskhistory.getId());
          Subtask subTask = subtasks.get(taskhistory.getId());

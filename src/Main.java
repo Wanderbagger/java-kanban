@@ -9,7 +9,7 @@ import java.time.Instant;
 
 
 public class Main {
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException, InterruptedException {
         Instant startTime = Instant.now();
         KVServer kvServer = new KVServer();
         kvServer.start();
@@ -46,7 +46,7 @@ public class Main {
         taskManager.addSubtask(3, subTask6);
         taskManager.addSubtask(3, subTask7);
 
-
+        taskManager.printTask(1);
         taskManager.save();
 
         System.out.println(taskManager.getHistory());
@@ -54,16 +54,16 @@ public class Main {
         taskManager.load();
 
 
-        System.out.println("Проверка данных на сервере---------------");
+        System.out.println("Проверка данных на сервере");
         for (String data: kvServer.getData().values()) {
             System.out.println(data);
         }
 
         System.out.println();
-        System.out.println("Полученные данные из сервера-------------");
-        System.out.println(taskManager.getAllTasks());
-        System.out.println(taskManager.getAllEpics());
-        System.out.println(taskManager.getAllSubtasks());
-        System.out.println(taskManager.getHistory());
+        System.out.println("Получение данных: ");
+        System.out.println("Задачи: " + taskManager.getAllTasks());
+        System.out.println("Эпики: " + taskManager.getAllEpics());
+        System.out.println("Подзадачи: " + taskManager.getAllSubtasks());
+        System.out.println("История: " + taskManager.getHistory());
     }
 }
