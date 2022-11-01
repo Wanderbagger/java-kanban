@@ -11,7 +11,11 @@ import java.util.List;
 
 public class FileBackedTasksManager extends InMemoryTaskManager implements TaskManager {
     public static final String HEADER = "type,id,name,status,description,epic";
-  // загрузка TasksManager'а из файла после запуска программы
+
+    public FileBackedTasksManager() {
+
+    }
+    // загрузка TasksManager'а из файла после запуска программы
 
 
     public static FileBackedTasksManager loadFromFile(File file) {

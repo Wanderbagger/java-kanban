@@ -6,6 +6,7 @@ import tasks.*;
 import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,7 +27,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
     public void shouldCreateTask() {
         Task task = createTask();
         manager.addTask(task);
-        List<Task> tasks = manager.getAllTasks();
+        Map<Integer, Task> tasks = manager.getAllTasks();
         assertNotNull(task.getStatus());
         assertEquals(Status.NEW, task.getStatus());
         assertEquals(List.of(task), tasks);
@@ -36,7 +37,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
     public void shouldCreateEpic() {
         Epic epic = createEpic();
         manager.addEpic(epic);
-        List<Epic> epics = manager.getAllEpics();
+        Map<Integer,Epic> epics = manager.getAllEpics();
         assertNotNull(epic.getStatus());
         assertEquals(Status.NEW, epic.getStatus());
         assertEquals(List.of(epic), epics);

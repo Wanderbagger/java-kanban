@@ -65,5 +65,6 @@ public class Main {
         System.out.println("Эпики: " + taskManager.getAllEpics());
         System.out.println("Подзадачи: " + taskManager.getAllSubtasks());
         System.out.println("История: " + taskManager.getHistory());
+
     }
 }

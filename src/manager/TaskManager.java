@@ -4,9 +4,8 @@ import tasks.Epic;
 import tasks.Subtask;
 import tasks.Task;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public interface TaskManager { // Интерфейс менеджера задач
 
@@ -56,11 +55,11 @@ public interface TaskManager { // Интерфейс менеджера зада
 
     Subtask getSubtaskById(int id);
 
-    List<Task> getAllTasks();
+    Map<Integer, Task> getAllTasks();
 
-    List<Epic> getAllEpics();
+    Map<Integer, Epic> getAllEpics();
 
-    List<Subtask> getAllSubtasks();
+    Map<Integer, Subtask> getAllSubtasks();
 
  void addNewPrioritizedTask(Task task);
 
