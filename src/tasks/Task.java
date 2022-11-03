@@ -14,7 +14,15 @@ public class Task {
     private long duration;
 
 
-    public Task(TypeTask typeTask, int id, String description, String name, Status status, Instant startTime, long duration) {
+    public Task(
+            TypeTask typeTask,
+            int id,
+            String description,
+            String name,
+            Status status,
+            Instant startTime,
+            long duration
+    ) {
         this.typeTask = typeTask;
         this.id = id;
         this.description = description;

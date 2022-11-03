@@ -4,7 +4,15 @@ import tasks.Epic;
 import tasks.Status;
 import tasks.Subtask;
 import tasks.Task;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Comparator;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.Iterator;
 
 public class InMemoryTaskManager implements TaskManager {
     private int id = 0;
@@ -268,20 +276,17 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Task getTaskById(int id) {
-        Task task = tasks.get(id);
-        return task;
+        return tasks.get(id);
     }
 
     @Override
     public Epic getEpicById(int id) {
-        Epic epic = epics.get(id);
-        return epic;
+        return epics.get(id);
     }
 
     @Override
     public Subtask getSubtaskById(int id) {
-        Subtask subtask = subtasks.get(id);
-        return subtask;
+        return subtasks.get(id);
     }
 
     @Override

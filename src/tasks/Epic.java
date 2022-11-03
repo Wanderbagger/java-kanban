@@ -1,13 +1,22 @@
 package tasks;
 
 import java.time.Instant;
-import java.util.*;
+import java.util.Objects;
+
 
 public class Epic extends Task {
 
     private Instant endTime;
 
-    public Epic(TypeTask typeTask, int id, String description, String name, Status status, Instant startTime, long duration) {
+    public Epic(
+            TypeTask typeTask,
+            int id,
+            String description,
+            String name,
+            Status status,
+            Instant startTime,
+            long duration
+    ) {
 
         super(typeTask, id, description, name, status, startTime, duration);
         this.endTime = super.getEndTime();

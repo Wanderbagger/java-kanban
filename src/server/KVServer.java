@@ -3,7 +3,6 @@ package server;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,27 +27,27 @@ public class KVServer {
 		server.createContext("/load", this::load);
 	}
 
-	private void load(HttpExchange h) throws IOException {
+	private void load(HttpExchange httpExchange) throws IOException {
 		try{
 			System.out.println("\n/load");
-			if (!hasAuth(h)) {
+			if (!hasAuth(httpExchange)) {
 				System.out.println("Запрос неавторизован, нужен параметр в query API_TOKEN со значением апи-ключа");
-				h.sendResponseHeaders(403, 0);
+				httpExchange.sendResponseHeaders(403, 0);
 				return;
 			}
-			if ("GET".equals(h.getRequestMethod())){
-				String key = h.getRequestURI().getPath().substring("/load/".length());
+			if ("GET".equals(httpExchange.getRequestMethod())){
+				String key = httpExchange.getRequestURI().getPath().substring("/load/".length());
 				String str = data.get(key); // Получить значение по ключу
 				if(str == null){
 					System.out.println("Такого значения нет");
-					h.sendResponseHeaders(400, 0);
+					httpExchange.sendResponseHeaders(400, 0);
 					return;
 				}else {
-					sendText(h,str);
+					sendText(httpExchange,str);
 				}
 			}
 		}finally {
-			h.close();
+			httpExchange.close();
 		}
 	}
 

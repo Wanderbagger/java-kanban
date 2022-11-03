@@ -4,14 +4,19 @@ import tasks.Epic;
 import tasks.Subtask;
 import tasks.Task;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.Writer;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+
 import java.nio.file.Files;
 import java.util.Collections;
 import java.util.List;
 
 public class FileBackedTasksManager extends InMemoryTaskManager implements TaskManager {
     public static final String HEADER = "type,id,name,status,description,epic";
-
+    public String FILENAME = "data.csv";
     public FileBackedTasksManager() {
 
     }
@@ -60,9 +65,9 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
     }
 
     public void save() {
-        String fileName = "data.csv";
+
         InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
-        try (Writer fileWriter = new FileWriter(fileName);
+        try (Writer fileWriter = new FileWriter(FILENAME);
              BufferedWriter br = new BufferedWriter(fileWriter)) {
             br.write(HEADER + System.lineSeparator());
             for (Task task : tasks.values()) {

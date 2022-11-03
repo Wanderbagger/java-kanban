@@ -9,37 +9,42 @@ import java.net.http.HttpResponse;
 
 public class KVTaskClient {
 
-    private final String url;
-    private final String apiToken;
+    private final String URL = "http://localhost:8080/";
+    private String apiToken;
 
-    public KVTaskClient() {
-        url = "http://localhost:8080/";
-        apiToken = register(url);
+    public KVTaskClient() throws IOException, InterruptedException {
+        register();
     }
 
-    private String register(String url){ // Авторизация APITOKEN
-       try {
-           HttpClient httpClient = HttpClient.newHttpClient();
-           HttpRequest build = HttpRequest.newBuilder()
-                   .uri(URI.create(url + "register"))
-                   .GET()
-                   .build();
-           HttpResponse<String> send = httpClient.send(build, HttpResponse.BodyHandlers.ofString());
-           return send.body();
-
-       }catch (Exception e){
-           throw new RuntimeException();
-       }
+    private void register() { // Авторизация APITOKEN
+        try {
+            HttpClient httpClient = HttpClient.newHttpClient();
+            HttpRequest build = HttpRequest.newBuilder()
+                    .uri(URI.create(URL + "register"))
+                    .GET()
+                    .build();
+            HttpResponse<String> response = httpClient.send(build, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() == 200) {
+                apiToken = response.body();
+            } else {
+                throw new RuntimeException("Не удалось получить API_TOKEN. Код ошибки: " + response.statusCode());
+            }
+        } catch (IOException | InterruptedException e) {
+            System.out.println("Во время выполнения запроса /register возникла ошибка.\n" +
+                    "Проверьте, адрес и повторите попытку.");
+        }
     }
+
+
 
     public void save(String key, String value){ // Сохранение на KVServer
         try {
             HttpClient httpClient = HttpClient.newHttpClient();
             HttpRequest build = HttpRequest.newBuilder()
-                    .uri(URI.create(url + "save/" + key + "?API_TOKEN=" + apiToken))
+                    .uri(URI.create(URL + "save/" + key + "?API_TOKEN=" + apiToken))
                     .POST(HttpRequest.BodyPublishers.ofString(value))
                     .build();
-            HttpResponse<String> send = httpClient.send(build, HttpResponse.BodyHandlers.ofString());
+            httpClient.send(build, HttpResponse.BodyHandlers.ofString());
         }catch (Exception e){
             throw new RuntimeException();
         }
@@ -49,11 +54,10 @@ public class KVTaskClient {
         try {
             HttpClient httpClient = HttpClient.newHttpClient();
             HttpRequest build = HttpRequest.newBuilder()
-                    .uri(URI.create(url + "load/" + key + "?API_TOKEN=" + apiToken))
+                    .uri(URI.create(URL + "load/" + key + "?API_TOKEN=" + apiToken))
                     .GET()
                     .build();
-            HttpResponse<String> send = httpClient.send(build, HttpResponse.BodyHandlers.ofString());
-            return send.body();
+            return httpClient.send(build, HttpResponse.BodyHandlers.ofString()).body();
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             throw new RuntimeException(e);

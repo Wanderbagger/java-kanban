@@ -15,13 +15,13 @@ public interface TaskManager { // Интерфейс менеджера зада
 
     void addSubtask(Integer epicId, Subtask subtask); // Добавление новой подзадачи
 
-   void deleteAllTasks();   // очистка списка задач
+    void deleteAllTasks();   // очистка списка задач
 
     void deleteAllEpics();   // очистка списка эпиков
 
- void deleteAllSubtasks();
+    void deleteAllSubtasks();
 
- void deleteAllSubtasksByEpicId(int epicId);   // удаление всех подзадач одного эпика
+    void deleteAllSubtasksByEpicId(int epicId);   // удаление всех подзадач одного эпика
 
     void deleteTask(int taskId);
 
@@ -61,11 +61,11 @@ public interface TaskManager { // Интерфейс менеджера зада
 
     Map<Integer, Subtask> getAllSubtasks();
 
- void addNewPrioritizedTask(Task task);
+    void addNewPrioritizedTask(Task task);
 
- void validateTaskPriority(Task task);
+    void validateTaskPriority(Task task);
 
- List<Task> getPrioritizedTasks();
+    List<Task> getPrioritizedTasks();
 
     void save();
 

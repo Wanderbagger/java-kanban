@@ -21,7 +21,7 @@ public class HttpTaskManager extends FileBackedTasksManager{
     private final KVTaskClient kvTaskClient = new KVTaskClient();
     private final Gson gson = Managers.getGson();
 
-    public HttpTaskManager() throws IOException {
+    public HttpTaskManager() throws IOException, InterruptedException {
         super(null);
     }
 
